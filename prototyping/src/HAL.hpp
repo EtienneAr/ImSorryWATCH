@@ -12,8 +12,11 @@ class HAL {
 
 public:
 	static void init();
-	static void applyLed(uint16_t config);
 
+	static void on();
+	static void off();
+
+	static void applyLed(uint16_t config);
 	static void setSlowBlinkingLed(uint16_t config);
 	static void setFastBlinkingLed(uint16_t config);
 	static void setLastLedNumber(int n);

@@ -10,6 +10,11 @@ uint16_t HAL::_fastBlinkingLed = 0;
 int 	 HAL::_lastLedN = 0;
 int 	 HAL::_blinkCount = 0;
 
+void HAL::init() {
+	HAL::_initLed();
+	HAL::_initTimer();
+}
+
 void HAL::_initLed() {
   for(int i=0;i<13;i++) {
     pinMode(_ledPin[i], OUTPUT);
@@ -19,12 +24,19 @@ void HAL::_initLed() {
 
 void HAL::_initTimer() {
 	Timer1.initialize(HAL_ULTRAFAST_BLINK_PERIOD);
+	HAL::on();
+}
+
+void HAL::on() {
 	Timer1.attachInterrupt(HAL::_blinker);
 }
 
-void HAL::init() {
-	HAL::_initLed();
-	HAL::_initTimer();
+void HAL::off() {
+	Timer1.detachInterrupt();
+	for(int i=0;i<13;i++) {
+		digitalWrite(HAL::_ledPin[i], LOW);
+	}
+	//Also clear every blink variable ?
 }
 
 void HAL::applyLed(uint16_t config) {

@@ -6,7 +6,7 @@ void setup() {
   HAL::init();
   randomSeed(analogRead(A7));
   //HAL::setSlowBlinkingLed(0xAAA);
-  //HAL::setFastBlinkingLed(0x555);
+  HAL::setFastBlinkingLed(0x555);
   HAL::applyLed(0xFFF);
   HAL::setLastLedNumber(4);
 }
@@ -22,4 +22,8 @@ void loop() {
   Serial.println("You typed : " + String(verif) + ". Answer is : " + String(random_test));
   while(Serial.available()) {Serial.read();}
   */
+  HAL::on();
+  delay(5000);
+  HAL::off();
+  delay(5000);
 }
