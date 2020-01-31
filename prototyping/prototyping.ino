@@ -2,7 +2,7 @@
 #include "src/hoursMinutes.hpp"
 
 void setup() {
-  HAL_init();
+  HAL::init();
   Serial.begin(115200);
   randomSeed(analogRead(A7));
 }

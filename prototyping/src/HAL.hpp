@@ -3,7 +3,15 @@
 
 #include <stdint.h>
 
-void HAL_init();
+class HAL {
 
-void HAL_applyLed(uint16_t config);
+public:
+	static void init();
+	static void applyLed(uint16_t config);
+
+private:
+	static void _initLed();
+
+};
+
 #endif

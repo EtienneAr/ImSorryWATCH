@@ -4,7 +4,7 @@
 
 void displayHour(int h) {
   h = h%12;
-  HAL_applyLed(1<<h);
+  HAL::applyLed(1<<h);
 }
 
 void displayMinute(int m) {
@@ -19,5 +19,5 @@ void displayMinute(int m) {
     ones = ((1<<(m%5)) -1)<<1;
   }
   
-  HAL_applyLed((five | ones) & 0xFFF);
+  HAL::applyLed((five | ones) & 0xFFF);
 }
