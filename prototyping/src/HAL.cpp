@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #include <TimerOne.h>
 
-static const int led[] = {4, A3, A2, A1, A0, 12, 11, 10, 9, 7, 6, 5, 8};
+int HAL::_ledPin[] = {4, A3, A2, A1, A0, 12, 11, 10, 9, 7, 6, 5, 8};
 
 uint16_t HAL::_slowBlinkingLed = 0;
 uint16_t HAL::_fastBlinkingLed = 0;
@@ -12,8 +12,8 @@ int 	 HAL::_blinkCount = 0;
 
 void HAL::_initLed() {
   for(int i=0;i<13;i++) {
-    pinMode(led[i], OUTPUT);
-    digitalWrite(led[i], HIGH);
+    pinMode(_ledPin[i], OUTPUT);
+    digitalWrite(_ledPin[i], HIGH);
   }
 }
 
@@ -29,7 +29,7 @@ void HAL::init() {
 
 void HAL::applyLed(uint16_t config) {
   for(int i=0;i<13;i++) {
-    digitalWrite(led[i], (config & 1<<i) != 0 );
+    digitalWrite(_ledPin[i], (config & 1<<i) != 0 );
   }
 }
 
@@ -56,15 +56,15 @@ void HAL::_blinker() {
 	) {
 		for(int i=0;i<13;i++) {
 			if(HAL::_fastBlinkingLed & 1<<i) {
-				digitalWrite(led[i], (_blinkCount % HAL_FAST_BLINK_SUB_PERIOD) >= HAL_FAST_BLINK_SUB_PERIOD/2);
+				digitalWrite(_ledPin[i], (_blinkCount % HAL_FAST_BLINK_SUB_PERIOD) >= HAL_FAST_BLINK_SUB_PERIOD/2);
 			} else if(HAL::_slowBlinkingLed & 1<<i) {
-				digitalWrite(led[i], (_blinkCount % HAL_SLOW_BLINK_SUB_PERIOD) >= HAL_SLOW_BLINK_SUB_PERIOD/2);
+				digitalWrite(_ledPin[i], (_blinkCount % HAL_SLOW_BLINK_SUB_PERIOD) >= HAL_SLOW_BLINK_SUB_PERIOD/2);
 			}
 		}
 	}
 
 	// Number display on the last led
 	if(_blinkCount % (HAL_LAST_LED_PAUSE_PERIOD + _lastLedN * 2) <= _lastLedN * 2) {
-		digitalWrite(led[12], _blinkCount % 2);
+		digitalWrite(_ledPin[12], _blinkCount % 2);
 	}
 }

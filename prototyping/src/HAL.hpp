@@ -27,6 +27,8 @@ private:
 	static void _initLed();
 	static void _initTimer();
 	static void _blinker();
+
+	static int _ledPin[];
 };
 
 #endif
