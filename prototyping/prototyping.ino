@@ -1,17 +1,8 @@
-#include "src/test.h"
-
-int led[] = {4, A3, A2, A1, A0, 12, 11, 10, 9, 7, 6, 5, 8};
-
-void initLed() {
-  for(int i=0;i<13;i++) {
-    pinMode(led[i], OUTPUT);
-    digitalWrite(led[i], HIGH);
-  }
-}
+#include "src/HAL.hpp"
 
 void displayHour(int h) {
   h = h%12;
-  applyLed(1<<h);
+  HAL_applyLed(1<<h);
 }
 
 void displayMinute(int m) {
@@ -26,11 +17,11 @@ void displayMinute(int m) {
     ones = ((1<<(m%5)) -1)<<1;
   }
   
-  applyLed((five | ones) & 0xFFF);
+  HAL_applyLed((five | ones) & 0xFFF);
 }
 
 void setup() {
-  initLed();
+  HAL_init();
   Serial.begin(115200);
   randomSeed(analogRead(A7));
 }
