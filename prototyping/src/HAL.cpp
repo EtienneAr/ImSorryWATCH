@@ -7,6 +7,7 @@ static const int led[] = {4, A3, A2, A1, A0, 12, 11, 10, 9, 7, 6, 5, 8};
 
 uint16_t HAL::_slowBlinkingLed = 0;
 uint16_t HAL::_fastBlinkingLed = 0;
+int 	 HAL::_lastLedN = 0;
 int 	 HAL::_blinkCount = 0;
 
 void HAL::_initLed() {
@@ -40,8 +41,14 @@ void HAL::setFastBlinkingLed(uint16_t config) {
 	_fastBlinkingLed = config;
 }
 
+void HAL::setLastLedNumber(int n) {
+	_lastLedN = n;
+}
+
 void HAL::_blinker() {
 	HAL::_blinkCount++;
+
+	// Normal blinking
 	if(    !(_blinkCount %  HAL_FAST_BLINK_SUB_PERIOD     )
 		|| !(_blinkCount % (HAL_FAST_BLINK_SUB_PERIOD /2) )
 		|| !(_blinkCount %  HAL_SLOW_BLINK_SUB_PERIOD     )
@@ -54,5 +61,10 @@ void HAL::_blinker() {
 				digitalWrite(led[i], (_blinkCount % HAL_SLOW_BLINK_SUB_PERIOD) >= HAL_SLOW_BLINK_SUB_PERIOD/2);
 			}
 		}
+	}
+
+	// Number display on the last led
+	if(_blinkCount % (HAL_LAST_LED_PAUSE_PERIOD + _lastLedN * 2) <= _lastLedN * 2) {
+		digitalWrite(led[12], _blinkCount % 2);
 	}
 }

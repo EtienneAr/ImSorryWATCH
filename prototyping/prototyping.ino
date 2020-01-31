@@ -5,8 +5,10 @@ void setup() {
   Serial.begin(115200);
   HAL::init();
   randomSeed(analogRead(A7));
-  HAL::setSlowBlinkingLed(0xAAA);
-  HAL::setFastBlinkingLed(0x555);
+  //HAL::setSlowBlinkingLed(0xAAA);
+  //HAL::setFastBlinkingLed(0x555);
+  HAL::applyLed(0xFFF);
+  HAL::setLastLedNumber(4);
 }
 
 int random_test;
