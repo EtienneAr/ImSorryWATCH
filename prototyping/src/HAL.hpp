@@ -2,7 +2,6 @@
 #define HAL_HPP
 
 #include <stdint.h>
-#include <Arduino.h>
 
 void HAL_init();
 
