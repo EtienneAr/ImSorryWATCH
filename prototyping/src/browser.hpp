@@ -3,10 +3,12 @@
 
 #define BROWSER_PAGE_MAX 10
 
+ typedef void (*pageCb)();
+
 class Browser {
 public:
 	static void init();
-	static void setPagesCallbacks(void (*callback)());
+	static void setPagesCallbacks(pageCb callback);
 
 private:
 	static const int _buttonPinA;
@@ -17,7 +19,7 @@ private:
 
 	static volatile int _page;
 
-	static void (*_userCallback)();
+	static pageCb _userCallback;
 };
 
 #endif

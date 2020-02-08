@@ -4,7 +4,8 @@
 
 const int Browser::_buttonPinA = 2;
 const int Browser::_buttonPinB = 3;
-void (*Browser::_userCallback)() = NULL;
+
+pageCb Browser::_userCallback = NULL;
 
 volatile int Browser::_page;
 
@@ -27,6 +28,6 @@ void Browser::_callback_B() {
 	Serial.println(_page);
 }
 
-void Browser::setPagesCallbacks(void (*callback)()) {
+void Browser::setPagesCallbacks(pageCb callback) {
 	Browser::_userCallback = callback;
 }
