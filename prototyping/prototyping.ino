@@ -5,13 +5,16 @@ void setup() {
   Serial.begin(115200);
   HAL::init();
   randomSeed(analogRead(A7));
-  //HAL::setSlowBlinkingLed(0xAAA);
+  HAL::setSlowBlinkingLed(0xAAA);
   HAL::setFastBlinkingLed(0x555);
-  HAL::applyLed(0xFFF);
+  //HAL::applyLed(0xFFF);
   HAL::setLastLedNumber(4);
 }
 
 int random_test;
+
+
+uint16_t i = 1;
 
 void loop() {
   /*
@@ -22,8 +25,11 @@ void loop() {
   Serial.println("You typed : " + String(verif) + ". Answer is : " + String(random_test));
   while(Serial.available()) {Serial.read();}
   */
-  HAL::on();
-  delay(5000);
+  delay(2000);
   HAL::off();
-  delay(5000);
+  delay(2000);
+  HAL::on();
+  delay(2000);
+  HAL::setFastBlinkingLed(i);
+  i++;
 }

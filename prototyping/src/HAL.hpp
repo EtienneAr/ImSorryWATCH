@@ -22,10 +22,10 @@ public:
 	static void setLastLedNumber(int n);
 
 private:
-	static uint16_t _slowBlinkingLed;
-	static uint16_t _fastBlinkingLed;
-	static int 		_lastLedN;
-	static int 		_blinkCount;
+	static volatile uint16_t _slowBlinkingLed;
+	static volatile uint16_t _fastBlinkingLed;
+	static volatile int 	 _lastLedN;
+	static volatile int 	 _blinkCount;
 
 	static void _initLed();
 	static void _initTimer();
