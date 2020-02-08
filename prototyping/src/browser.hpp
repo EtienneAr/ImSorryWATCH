@@ -6,6 +6,7 @@
 class Browser {
 public:
 	static void init();
+	static void setPagesCallbacks(void (*callback)());
 
 private:
 	static const int _buttonPinA;
@@ -15,6 +16,8 @@ private:
 	static void _callback_B();
 
 	static volatile int _page;
+
+	static void (*_userCallback)();
 };
 
 #endif

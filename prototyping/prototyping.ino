@@ -2,10 +2,15 @@
 #include "src/hoursMinutes.hpp"
 #include "src/browser.hpp"
 
+void test() {
+  Serial.println("TEST");
+}
+
 void setup() {
   Serial.begin(115200);
   HAL::init();
   Browser::init();
+  Browser::setPagesCallbacks(test);
   randomSeed(analogRead(A7));
   HAL::setSlowBlinkingLed(0xAAA);
   HAL::setFastBlinkingLed(0x555);
