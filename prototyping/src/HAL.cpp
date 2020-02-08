@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #include <TimerOne.h>
 
-int HAL::_ledPin[] = {4, A3, A2, A1, A0, 12, 11, 10, 9, 7, 6, 5, 8};
+const int HAL::_ledPin[] = {4, A3, A2, A1, A0, 12, 11, 10, 9, 7, 6, 5, 8};
 
 volatile uint16_t HAL::_slowBlinkingLed = 0;
 volatile uint16_t HAL::_fastBlinkingLed = 0;

@@ -31,7 +31,7 @@ private:
 	static void _initTimer();
 	static void _blinker();
 
-	static int _ledPin[];
+	static const int _ledPin[];
 };
 
 #endif
