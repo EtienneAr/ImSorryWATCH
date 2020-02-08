@@ -2,15 +2,30 @@
 #include "src/hoursMinutes.hpp"
 #include "src/browser.hpp"
 
-void test() {
-  Serial.println("TEST");
+void test1() {
+  Serial.println("TEST1");
 }
+
+void test2() {
+  Serial.println("TEST2");
+}
+
+void test3() {
+  Serial.println("TEST3");
+}
+
+void test4() {
+  Serial.println("TEST4");
+}
+
+pageCb mycallbacks[] = {test1, test2, test3, test4};
+
 
 void setup() {
   Serial.begin(115200);
   HAL::init();
   Browser::init();
-  Browser::setPagesCallbacks(test);
+  Browser::setPagesCallbacks(mycallbacks, 4);
   randomSeed(analogRead(A7));
   HAL::setSlowBlinkingLed(0xAAA);
   HAL::setFastBlinkingLed(0x555);
