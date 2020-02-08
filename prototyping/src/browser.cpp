@@ -5,15 +5,22 @@
 const int Browser::_buttonPinA = 2;
 const int Browser::_buttonPinB = 3;
 
+volatile int Browser::_page;
+
 void Browser::init() {
-	attachInterrupt(digitalPinToInterrupt(_buttonPinA), Browser::callback_A, RISING);
-	attachInterrupt(digitalPinToInterrupt(_buttonPinB), Browser::callback_B, RISING);
+	Browser::_page = 0;
+	attachInterrupt(digitalPinToInterrupt(_buttonPinA), Browser::_callback_A, RISING);
+	attachInterrupt(digitalPinToInterrupt(_buttonPinB), Browser::_callback_B, RISING);
 }
 
-void Browser::callback_A() {
-	Serial.println("A");
+void Browser::_callback_A() {
+	_page++;
+	if(_page > BROWSER_PAGE_MAX) _page = BROWSER_PAGE_MAX;
+	Serial.println(_page);
 }
 
-void Browser::callback_B() {
-	Serial.println("B");
+void Browser::_callback_B() {
+	_page--;
+	if(_page < 0) _page = 0;
+	Serial.println(_page);
 }
