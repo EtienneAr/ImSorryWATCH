@@ -29,17 +29,21 @@ void HAL::_initTimer() {
 
 void HAL::on() {
 	Timer1.attachInterrupt(HAL::_blinker);
+	HAL::_blinkCount = 0;
 }
 
 void HAL::off() {
 	Timer1.detachInterrupt();
-	for(int i=0;i<13;i++) {
-		digitalWrite(HAL::_ledPin[i], LOW);
-	}
-	//Also clear every blink variable
+	HAL::clear();
+}
+
+void HAL::clear() {
 	HAL::_fastBlinkingLed = (uint16_t) 0x0;
 	HAL::_slowBlinkingLed = (uint16_t) 0x0;
 	HAL::_lastLedN		  = (uint16_t) 0x0;
+	for(int i=0;i<13;i++) {
+		digitalWrite(HAL::_ledPin[i], LOW);
+	}
 }
 
 void HAL::applyLed(uint16_t config) {

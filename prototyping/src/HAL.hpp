@@ -21,6 +21,7 @@ public:
 	static void setFastBlinkingLed(uint16_t config);
 	static void setLastLedNumber(int n);
 
+	static void clear();
 private:
 	static volatile uint16_t _slowBlinkingLed;
 	static volatile uint16_t _fastBlinkingLed;

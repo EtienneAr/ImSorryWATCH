@@ -3,39 +3,42 @@
 #include "src/browser.hpp"
 
 void test0() {
-  Serial.println("TEST 0");
+  Serial.println(0);
 }
 
 void test1() {
-  Serial.println("TEST 1 ... ");
-  for(int i=0;i<10000;i++) {
-    for(int j=0;j<100;j++) {
-      asm("NOP  ");
-    }
-  }
-  Serial.println("DONE");
+  Serial.println("OFF");
+  HAL::off();
 }
 
 void test2() {
-  Serial.println("TEST 2");
+  Serial.println("ON");
+  HAL::on();
 }
 
 void test3() {
-  Serial.println("TEST 3");
+  Serial.println("SetSlowBlink");
+  HAL::setSlowBlinkingLed(0xAAA);
 }
 
 void test4() {
-  Serial.println("TEST 4");
+  Serial.println("Clear");
+  HAL::clear();
 }
 
-pageCb mycallbacks[] = {test0, test1, test2, test3, test4};
+void test5() {
+  Serial.println("setFastBlink");
+  HAL::setFastBlinkingLed(0x555);
+}
+
+pageCb mycallbacks[] = {test0, test1, test2, test3, test4, test5};
 
 
 void setup() {
   Serial.begin(115200);
   HAL::init();
   Browser::init();
-  Browser::setPagesCallbacks(mycallbacks, 5);
+  Browser::setPagesCallbacks(mycallbacks, 6);
   randomSeed(analogRead(A7));
   HAL::setSlowBlinkingLed(0xAAA);
   HAL::setFastBlinkingLed(0x555);
