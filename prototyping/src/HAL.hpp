@@ -19,14 +19,13 @@ public:
 	static void auto_off(unsigned int timeout_ms, void (*callback)(void));
 
 	static void applyLed(uint16_t config);
-	static void setSlowBlinkingLed(uint16_t config);
-	static void setFastBlinkingLed(uint16_t config);
+	static void setBlinkingLed(uint16_t config);
 	static void setLastLedNumber(int n);
 
 	static void clear();
 private:
-	static volatile uint16_t _slowBlinkingLed;
-	static volatile uint16_t _fastBlinkingLed;
+	static volatile uint16_t _onLed;
+	static volatile uint16_t _blinkingLed;
 	static volatile int 	 _lastLedN;
 	static volatile long 	 _blinkCount;
 	static volatile long 	 _autoOffCount;

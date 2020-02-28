@@ -18,7 +18,7 @@ void test2() {
 
 void test3() {
   Serial.println("SetSlowBlink");
-  HAL::setSlowBlinkingLed(0xAAA);
+  HAL::setBlinkingLed(0xAAA);
 }
 
 void test4() {
@@ -28,7 +28,8 @@ void test4() {
 
 void test5() {
   Serial.println("setFastBlink");
-  HAL::setFastBlinkingLed(0x555);
+  HAL::applyLed(0x555);
+  HAL::setBlinkingLed(0x555);
 }
 
 pageCb mycallbacks[] = {test0, test1, test2, test3, test4, test5};
@@ -43,8 +44,8 @@ void setup() {
   //Browser::init();
   //Browser::setPagesCallbacks(mycallbacks, 6);
   //randomSeed(analogRead(A7));
-  HAL::setSlowBlinkingLed(0xAAA);
-  HAL::setFastBlinkingLed(0x555);
+  HAL::applyLed(0x555);
+  HAL::setBlinkingLed(0xFFF);
   //HAL::applyLed(0xFFF);
   HAL::setLastLedNumber(4);
   HAL::auto_off(2000, cbtest);
