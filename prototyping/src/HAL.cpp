@@ -10,6 +10,7 @@ volatile uint16_t HAL::_fastBlinkingLed = 0;
 volatile int 	  HAL::_lastLedN = 0;
 volatile long 	  HAL::_blinkCount = 0;
 volatile long 	  HAL::_autoOffCount = -1;
+volatile void 	  (*HAL::_autoOffCb)(void) = NULL;
 
 void HAL::init() {
 	HAL::_initLed();
@@ -39,7 +40,12 @@ void HAL::off() {
 }
 
 void HAL::auto_off(unsigned int timeout_ms) {
+	HAL::auto_off(timeout_ms, NULL);
+}
+
+void HAL::auto_off(unsigned int timeout_ms, void (*callback)(void)) {
 	HAL::_autoOffCount = ((long) 1000 * timeout_ms) / HAL_ULTRAFAST_BLINK_PERIOD;
+	HAL::_autoOffCb = callback;
 }
 
 void HAL::clear() {
@@ -96,6 +102,7 @@ void HAL::_blinker() {
 	if(HAL::_autoOffCount == 0) {
 		HAL::off();
 		HAL::_autoOffCount = -1;
+		if(HAL::_autoOffCb != NULL) HAL::_autoOffCb();
 	}
 
 	if(HAL::_autoOffCount > 0) HAL::_autoOffCount--;

@@ -33,6 +33,9 @@ void test5() {
 
 pageCb mycallbacks[] = {test0, test1, test2, test3, test4, test5};
 
+void cbtest() {
+  Serial.println("COUCOU");
+}
 
 void setup() {
   Serial.begin(115200);
@@ -44,7 +47,7 @@ void setup() {
   HAL::setFastBlinkingLed(0x555);
   //HAL::applyLed(0xFFF);
   HAL::setLastLedNumber(4);
-  HAL::auto_off(2000);
+  HAL::auto_off(2000, cbtest);
 }
 
 void loop() {
