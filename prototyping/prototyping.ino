@@ -2,6 +2,9 @@
 #include "src/hoursMinutes.hpp"
 #include "src/browser.hpp"
 
+#include <Wire.h>
+#include "DS3231.h"
+
 void test0() {
   Serial.println(0);
 }
@@ -38,8 +41,17 @@ void cbtest() {
   Serial.println("COUCOU");
 }
 
+void setupRTC() {
+  Wire.begin();
+}
+
+DS3231 Clock;
+
 void setup() {
   Serial.begin(115200);
+  setupRTC();
+  Serial.println("0. Sec : ");
+  Serial.println(Clock.getSecond());
   HAL::init();
   //Browser::init();
   //Browser::setPagesCallbacks(mycallbacks, 6);
@@ -48,7 +60,10 @@ void setup() {
   HAL::setBlinkingLed(0xFFF);
   //HAL::applyLed(0xFFF);
   HAL::setLastLedNumber(4);
-  HAL::auto_off(2000, cbtest);
+  //HAL::auto_off(2000, cbtest);
+  Serial.println("1. Sec : ");
+  Serial.println(Clock.getSecond());
+
 }
 
 void loop() {
