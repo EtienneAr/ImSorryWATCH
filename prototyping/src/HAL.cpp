@@ -8,7 +8,8 @@ const int HAL::_ledPin[] = {4, A3, A2, A1, A0, 12, 11, 10, 9, 7, 6, 5, 8};
 volatile uint16_t HAL::_slowBlinkingLed = 0;
 volatile uint16_t HAL::_fastBlinkingLed = 0;
 volatile int 	  HAL::_lastLedN = 0;
-volatile int 	  HAL::_blinkCount = 0;
+volatile long 	  HAL::_blinkCount = 0;
+volatile long 	  HAL::_autoOffCount = -1;
 
 void HAL::init() {
 	HAL::_initLed();
@@ -35,6 +36,10 @@ void HAL::on() {
 void HAL::off() {
 	Timer1.detachInterrupt();
 	HAL::clear();
+}
+
+void HAL::auto_off(unsigned int timeout_ms) {
+	HAL::_autoOffCount = ((long) 1000 * timeout_ms) / HAL_ULTRAFAST_BLINK_PERIOD;
 }
 
 void HAL::clear() {
@@ -86,4 +91,12 @@ void HAL::_blinker() {
 	if(_blinkCount % (HAL_LAST_LED_PAUSE_PERIOD + _lastLedN * 2) <= _lastLedN * 2) {
 		digitalWrite(_ledPin[12], _blinkCount % 2);
 	}
+
+	//Auto off
+	if(HAL::_autoOffCount == 0) {
+		HAL::off();
+		HAL::_autoOffCount = -1;
+	}
+
+	if(HAL::_autoOffCount > 0) HAL::_autoOffCount--;
 }

@@ -15,6 +15,7 @@ public:
 
 	static void on();
 	static void off();
+	static void auto_off(unsigned int timeout_ms);
 
 	static void applyLed(uint16_t config);
 	static void setSlowBlinkingLed(uint16_t config);
@@ -26,7 +27,8 @@ private:
 	static volatile uint16_t _slowBlinkingLed;
 	static volatile uint16_t _fastBlinkingLed;
 	static volatile int 	 _lastLedN;
-	static volatile int 	 _blinkCount;
+	static volatile long 	 _blinkCount;
+	static volatile long 	 _autoOffCount;
 
 	static void _initLed();
 	static void _initTimer();
