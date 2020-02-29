@@ -20,6 +20,7 @@ public:
 
 	static void setStaticLed(uint16_t config);
 	static void setBlinkingLed(uint16_t config);
+	static void setCombinedLed(uint32_t config);
 	static void setLastLedNumber(int n);
 
 	static void clear();

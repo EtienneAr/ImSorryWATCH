@@ -71,7 +71,11 @@ void HAL::setStaticLed(uint16_t config) {
 
 void HAL::setBlinkingLed(uint16_t config) {
 	_blinkingLed = config;
+}
 
+void HAL::setCombinedLed(uint32_t config) {
+	HAL::setStaticLed(config & 0xFFF);
+	HAL::setBlinkingLed(config >> 16);
 }
 
 void HAL::setLastLedNumber(int n) {

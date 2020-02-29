@@ -23,3 +23,21 @@ uint16_t Artist::minutesToLed(int m) {
   
   return (five | ones) & 0xFFF;
 }
+
+uint32_t Artist::decimalToLed(int d) {
+  int dd = abs(d);
+  bool isNeg = d < 0;
+
+  uint16_t tens, ones;
+  
+  tens = dd / 10;
+  tens = (1<<tens);
+
+  ones = dd % 10;
+  ones = (1<<(ones + 1)) - 1;
+  ones &= 0xFFE;
+  
+  if(isNeg) ones |= (1<<11);
+
+  return ( ((uint32_t) tens) << 16) | ones;
+}

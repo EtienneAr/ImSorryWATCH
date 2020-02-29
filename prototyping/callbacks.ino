@@ -22,6 +22,15 @@ void displayTime() {
   HAL::auto_off(3000, suspend);
 }
 
+void decimalTest() {
+  HAL::on();
+  int dec = random(198);
+  HAL::setCombinedLed(Artist::decimalToLed(dec-99));
+  Serial.println(dec-99);
+  HAL::auto_off(-1);
+}
+
+
 void blinkTest() {
   HAL::on();
   HAL::setStaticLed(0x555);

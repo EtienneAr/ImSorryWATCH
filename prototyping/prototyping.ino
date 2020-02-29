@@ -10,9 +10,10 @@ DS3231 Clock;
 
 void displayTime();
 void blinkTest();
+void decimalTest();
 
-pageCb buttonAcb[] = {displayTime, blinkTest};
-#define callbackA_N 2
+pageCb buttonAcb[] = {displayTime, decimalTest, blinkTest};
+#define callbackA_N 3
 
 void setupRTC() {
   Wire.begin();
