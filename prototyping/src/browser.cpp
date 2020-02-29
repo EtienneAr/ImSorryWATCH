@@ -46,7 +46,6 @@ void Browser::pointersReset() {
 }
 
 void Browser::_callbackButtonA() {
-	sleep_disable();//Disable sleep mode
 	if(_pageCursor < _pageNb - 1) {
 		_pageCursor++ ;
 		_pageToPrint = _pageCursor;
@@ -54,7 +53,6 @@ void Browser::_callbackButtonA() {
 }
 
 void Browser::_callbackButtonB() {
-	sleep_disable();//Disable sleep mode
 	if(_pageCursor > 0) {
 		_pageCursor--;
 		_pageToPrint = _pageCursor;

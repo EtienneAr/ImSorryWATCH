@@ -1,4 +1,4 @@
-#include <avr/sleep.h>//this AVR library contains the methods that controls the sleep modes
+#include <avr/sleep.h>  //this AVR library contains the methods that controls the sleep modes
 
 bool h12;
 bool PM;
@@ -15,8 +15,6 @@ void suspend(void) {
 }
 
 void displayTime() {
-  sleep_disable();
-  Serial.println("Display time");
   HAL::on();
   HAL::setLastLedNumber(1);
   HAL::applyLed(minutesToLed(Clock.getMinute()));
@@ -25,8 +23,6 @@ void displayTime() {
 }
 
 void blinkTest() {
-  sleep_disable();
-  Serial.println("blinkTest");
   HAL::on();
   HAL::applyLed(0x555);
   HAL::setBlinkingLed(0xFFF);

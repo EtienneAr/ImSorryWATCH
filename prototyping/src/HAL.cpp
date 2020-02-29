@@ -15,6 +15,7 @@ volatile void 	  (*HAL::_autoOffCb)(void) = NULL;
 void HAL::init() {
 	HAL::_initLed();
 	HAL::_initTimer();
+	HAL::clear();
 }
 
 void HAL::_initLed() {
