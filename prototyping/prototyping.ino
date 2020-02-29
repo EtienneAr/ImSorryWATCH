@@ -5,17 +5,19 @@
 #include <Wire.h>
 #include "DS3231.h"
 
+DS3231 Clock;
+
 void test0() {
-  Serial.println(0);
+  Serial.println(Clock.getSecond());
 }
 
 void test1() {
-  Serial.println("OFF");
+  Serial.println(Clock.getSecond());
   HAL::off();
 }
 
 void test2() {
-  Serial.println("ON");
+  Serial.println(Clock.getSecond());
   HAL::on();
 }
 
@@ -45,16 +47,14 @@ void setupRTC() {
   Wire.begin();
 }
 
-DS3231 Clock;
-
 void setup() {
   Serial.begin(115200);
   setupRTC();
   Serial.println("0. Sec : ");
   Serial.println(Clock.getSecond());
   HAL::init();
-  //Browser::init();
-  //Browser::setPagesCallbacks(mycallbacks, 6);
+  Browser::init();
+  Browser::setPagesCallbacks(mycallbacks, 6);
   //randomSeed(analogRead(A7));
   HAL::applyLed(0x555);
   HAL::setBlinkingLed(0xFFF);
@@ -67,5 +67,5 @@ void setup() {
 }
 
 void loop() {
-  //Browser::spinOnce();
+  Browser::spinOnce();
 }
