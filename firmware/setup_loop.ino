@@ -1,18 +1,15 @@
 pageCb buttonAcb[] = {displayTime, decimalTest, blinkTest};
 #define callbackA_N 3
 
-void setupRTC() {
-  Wire.begin();
-}
-
 void setup() {
   Serial.begin(115200);
   
+  HAL::init();
+  Browser::init(PIN_BUTTON_A, PIN_BUTTON_B);
+
   setupRTC();
   
-  HAL::init();
-  
-  Browser::init();
+  //Setup pages only after the RTC is setup
   Browser::setPagesCallbacks(buttonAcb, callbackA_N);
 }
 

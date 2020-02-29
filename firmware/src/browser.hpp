@@ -5,14 +5,14 @@
 
 class Browser {
 public:
-	static void init();
+	static void init(int pinButtonA, int pinButtonB);
 	static void pointersReset();
 	static void setPagesCallbacks(pageCb callbacks[], int len);
 	static void spinOnce();
 
 private:
-	static const int _buttonPinA;
-	static const int _buttonPinB;
+	static int _buttonPinA;
+	static int _buttonPinB;
 
 	static void _callbackButtonA();
 	static void _callbackButtonB();
