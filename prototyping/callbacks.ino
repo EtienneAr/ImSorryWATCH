@@ -17,14 +17,14 @@ void suspend(void) {
 void displayTime() {
   HAL::on();
   HAL::setLastLedNumber(1);
-  HAL::applyLed(Artist::minutesToLed(Clock.getMinute()));
+  HAL::setStaticLed(Artist::minutesToLed(Clock.getMinute()));
   HAL::setBlinkingLed(Artist::hoursToLed(Clock.getHour(h12, PM)));
   HAL::auto_off(3000, suspend);
 }
 
 void blinkTest() {
   HAL::on();
-  HAL::applyLed(0x555);
+  HAL::setStaticLed(0x555);
   HAL::setBlinkingLed(0xFFF);
   HAL::setLastLedNumber(2);
   HAL::auto_off(3000, suspend);

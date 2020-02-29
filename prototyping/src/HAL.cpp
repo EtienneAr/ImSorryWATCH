@@ -62,7 +62,7 @@ void HAL::clear() {
 	}
 }
 
-void HAL::applyLed(uint16_t config) {
+void HAL::setStaticLed(uint16_t config) {
   HAL::_onLed = config;
   for(int i=0;i<13;i++) {
     digitalWrite(_ledPin[i], (config & 1<<i) != 0 );

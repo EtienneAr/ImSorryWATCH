@@ -18,7 +18,7 @@ public:
 	static void auto_off(unsigned int timeout_ms);
 	static void auto_off(unsigned int timeout_ms, void (*callback)(void));
 
-	static void applyLed(uint16_t config);
+	static void setStaticLed(uint16_t config);
 	static void setBlinkingLed(uint16_t config);
 	static void setLastLedNumber(int n);
 
