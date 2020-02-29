@@ -1,8 +1,8 @@
 #ifndef HOURSMINUTES_HPP
 #define HOURSMINUTES_HPP
 
-void displayHour(int h);
+uint16_t hoursToLed(int h);
 
-void displayMinute(int m);
+uint16_t minutesToLed(int m);
 
 #endif

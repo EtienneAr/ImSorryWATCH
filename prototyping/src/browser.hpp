@@ -6,6 +6,7 @@
 class Browser {
 public:
 	static void init();
+	static void pointersReset();
 	static void setPagesCallbacks(pageCb callbacks[], int len);
 	static void spinOnce();
 

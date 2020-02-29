@@ -2,12 +2,12 @@
 #include "hoursMinutes.hpp"
 #include "HAL.hpp"
 
-void displayHour(int h) {
+uint16_t hoursToLed(int h) {
   h = h%12;
-  HAL::applyLed(1<<h);
+  return 1<<h;
 }
 
-void displayMinute(int m) {
+uint16_t minutesToLed(int m) {
   int five = (m%30) / 5;
   five = (1<<(five + 1)) - 1;
 
@@ -19,5 +19,5 @@ void displayMinute(int m) {
     ones = ((1<<(m%5)) -1)<<1;
   }
   
-  HAL::applyLed((five | ones) & 0xFFF);
+  return (five | ones) & 0xFFF;
 }

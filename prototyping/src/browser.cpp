@@ -30,13 +30,18 @@ void Browser::spinOnce() {
 }
 
 void Browser::init() {
-	Browser::_pageCursor = 0;
 	Browser::_pageNb = 0;
-	Browser::_pageToPrint = -1;
+	Browser::pointersReset();
 	pinMode(_buttonPinA, INPUT_PULLUP);
 	pinMode(_buttonPinB, INPUT_PULLUP);
 	attachInterrupt(digitalPinToInterrupt(_buttonPinA), Browser::_callbackButtonA, RISING);
 	attachInterrupt(digitalPinToInterrupt(_buttonPinB), Browser::_callbackButtonB, RISING);
+}
+
+void Browser::pointersReset() {
+	Browser::_pageCursor = -1;
+	Browser::_pageToPrint = -1;
+	Serial.println("Pointers reset");
 }
 
 void Browser::_callbackButtonA() {
