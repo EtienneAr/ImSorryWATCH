@@ -17,8 +17,8 @@ void suspend(void) {
 void displayTime() {
   HAL::on();
   HAL::setLastLedNumber(1);
-  HAL::applyLed(minutesToLed(Clock.getMinute()));
-  HAL::setBlinkingLed(hoursToLed(Clock.getHour(h12, PM)));
+  HAL::applyLed(Artist::minutesToLed(Clock.getMinute()));
+  HAL::setBlinkingLed(Artist::hoursToLed(Clock.getHour(h12, PM)));
   HAL::auto_off(3000, suspend);
 }
 

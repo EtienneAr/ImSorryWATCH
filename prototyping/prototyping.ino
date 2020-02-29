@@ -1,5 +1,5 @@
 #include "src/HAL.hpp"
-#include "src/hoursMinutes.hpp"
+#include "src/artist.hpp"
 #include "src/browser.hpp"
 
 #include <Wire.h>
