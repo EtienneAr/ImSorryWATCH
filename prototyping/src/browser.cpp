@@ -1,6 +1,7 @@
 #include "browser.hpp"
 
 #include <Arduino.h>
+#include <avr/sleep.h>//this AVR library contains the methods that controls the sleep modes
 
 const int Browser::_buttonPinA = 2;
 const int Browser::_buttonPinB = 3;
@@ -45,6 +46,7 @@ void Browser::pointersReset() {
 }
 
 void Browser::_callbackButtonA() {
+	sleep_disable();//Disable sleep mode
 	if(_pageCursor < _pageNb - 1) {
 		_pageCursor++ ;
 		_pageToPrint = _pageCursor;
@@ -52,6 +54,7 @@ void Browser::_callbackButtonA() {
 }
 
 void Browser::_callbackButtonB() {
+	sleep_disable();//Disable sleep mode
 	if(_pageCursor > 0) {
 		_pageCursor--;
 		_pageToPrint = _pageCursor;

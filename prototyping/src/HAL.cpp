@@ -44,8 +44,12 @@ void HAL::auto_off(unsigned int timeout_ms) {
 }
 
 void HAL::auto_off(unsigned int timeout_ms, void (*callback)(void)) {
-	HAL::_autoOffCount = ((long) 1000 * timeout_ms) / HAL_ULTRAFAST_BLINK_PERIOD;
-	HAL::_autoOffCb = callback;
+	if(timeout_ms > 0) {
+		HAL::_autoOffCount = ((long) 1000 * timeout_ms) / HAL_ULTRAFAST_BLINK_PERIOD;
+		HAL::_autoOffCb = callback;
+	} else {
+		HAL::_autoOffCount = -1;
+	}
 }
 
 void HAL::clear() {
