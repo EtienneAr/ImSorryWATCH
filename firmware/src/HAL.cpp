@@ -71,6 +71,16 @@ void HAL::setStaticLed(uint16_t config) {
 
 void HAL::setBlinkingLed(uint16_t config) {
 	_blinkingLed = config;
+	
+	// Update all LED
+	// /!\ Could be optimized to only update changing LEDS...
+	for(int i=0;i<13;i++) {
+		if( HAL::_onLed & 1<<i) {
+	    	digitalWrite(_ledPin[i], HIGH);
+		} else if((HAL::_blinkingLed & 1<<i) == 0) {
+			digitalWrite(_ledPin[i], LOW);
+		}
+  }
 }
 
 void HAL::setCombinedLed(uint32_t config) {
