@@ -18,6 +18,8 @@ uint16_t Artist::minutesToLed(int m) {
       five = five << 6;
 
       ones = ((1<<(m%5)) -1)<<1;
+    } else {
+      five &= 0xFFE; // Turn off LED 0
     }
   // Insert #endif here
   
