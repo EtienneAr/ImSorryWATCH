@@ -11,7 +11,7 @@ uint16_t Artist::minutesToLed(int m) {
   five = (m%30) / 5;          // Number of led to light up
   five = (1<<(five + 1)) - 1; // Light all the led before
 
-  #ifdef ARTIST__HOURS_WITH_MINUTES
+  // Insert #ifdef here
     ones = ~((1<<(12 - m%5)) - 1);
     
     if(m > 30) {
@@ -19,7 +19,7 @@ uint16_t Artist::minutesToLed(int m) {
 
       ones = ((1<<(m%5)) -1)<<1;
     }
-  #endif
+  // Insert #endif here
   
   return (five | ones) & 0xFFF;
 }

@@ -3,8 +3,6 @@
 
 #include <Arduino.h>
 
-#define ETIENNE_SPECIALS
-
 class Artist {
 public:
 	static uint16_t hoursToLed(int h);
