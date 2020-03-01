@@ -23,6 +23,7 @@ void HAL::_initLed() {
     pinMode(_ledPin[i], OUTPUT);
     digitalWrite(_ledPin[i], HIGH);
   }
+  delay(1000);
 }
 
 void HAL::_initTimer() {
@@ -64,7 +65,7 @@ void HAL::clear() {
 
 void HAL::setStaticLed(uint16_t config) {
   HAL::_onLed = config;
-  for(int i=0;i<13;i++) {
+  for(int i=0;i<12;i++) {
     digitalWrite(_ledPin[i], (config & 1<<i) != 0 );
   }
 }
@@ -74,7 +75,7 @@ void HAL::setBlinkingLed(uint16_t config) {
 	
 	// Update all LED
 	// /!\ Could be optimized to only update changing LEDS...
-	for(int i=0;i<13;i++) {
+	for(int i=0;i<12;i++) {
 		if( HAL::_onLed & 1<<i) {
 	    	digitalWrite(_ledPin[i], HIGH);
 		} else if((HAL::_blinkingLed & 1<<i) == 0) {
@@ -101,7 +102,7 @@ void HAL::_blinker() {
 		|| !(_blinkCount %  HAL_SLOW_BLINK_SUB_PERIOD     )
 		|| !(_blinkCount % (HAL_SLOW_BLINK_SUB_PERIOD /2) )
 	) {
-		for(int i=0;i<13;i++) {
+		for(int i=0;i<12;i++) {
 			if(HAL::_blinkingLed & 1<<i) {
 				if(HAL::_onLed & 1<<i) {
 					digitalWrite(_ledPin[i], (_blinkCount % HAL_FAST_BLINK_SUB_PERIOD) >= HAL_FAST_BLINK_SUB_PERIOD/2);
@@ -114,6 +115,7 @@ void HAL::_blinker() {
 
 	// Number display on the last led
 	if(_blinkCount % (HAL_LAST_LED_PAUSE_PERIOD + _lastLedN * 2) <= _lastLedN * 2) {
+		Serial.println(_blinkCount);
 		digitalWrite(_ledPin[12], _blinkCount % 2);
 	}
 
