@@ -47,13 +47,6 @@ void setupRTC() {
   setupRTC_h = 0;
   setupRTC_m = 0;
   while(setupRTC_step < 2) {
-      switch(setupRTC_step) {
-    case 0:
-      HAL::setBlinkingLed(Artist::hoursToLed(setupRTC_h));
-      break;
-    case 1:
-      HAL::setStaticLed(Artist::minutesToLed(setupRTC_m));
-      break;
-  }
+
   }
 }
