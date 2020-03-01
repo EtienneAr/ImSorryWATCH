@@ -3,38 +3,24 @@
 #include "src/button.hpp"
 #include "DS3231.h"
 
-volatile int setupRTC_step = -1;
+volatile int setupRTC_step = 0;
 volatile int setupRTC_h, setupRTC_m = 0;
 
-#define SETUP_DEBOUNCE_LOOP 1024
-
-inline void setupRTC_debounce() { 
-  for(int i=0;i<SETUP_DEBOUNCE_LOOP;i++) {
-    __asm__("nop\n\t");
-  }
-}
-
 void cb_setupRTC_A() {
-  if(digitalRead(PIN_BUTTON_A) == HIGH) {
-    switch(setupRTC_step) {
-      case 0:
-        setupRTC_h++;
-        HAL::setBlinkingLed(Artist::hoursToLed(setupRTC_h));
-        break;
-      case 1:
-        setupRTC_m++;
-        HAL::setStaticLed(Artist::minutesToLed(setupRTC_m));
-        break;
-    } 
-  }
-  setupRTC_debounce();
+  switch(setupRTC_step) {
+    case 0:
+      setupRTC_h++;
+      HAL::setBlinkingLed(Artist::hoursToLed(setupRTC_h));
+      break;
+    case 1:
+      setupRTC_m++;
+      HAL::setStaticLed(Artist::minutesToLed(setupRTC_m));
+      break;
+  } 
 }
 
 void cb_setupRTC_B() {
-  if(digitalRead(PIN_BUTTON_B) == HIGH) {
-    setupRTC_step++;
-  }
-  setupRTC_debounce();
+  setupRTC_step++;
 }
 
 void setupRTC() {
