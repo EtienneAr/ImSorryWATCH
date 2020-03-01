@@ -1,10 +1,8 @@
 #include "browser.hpp"
+#include "button.hpp"
 
 #include <Arduino.h>
 #include <avr/sleep.h>//this AVR library contains the methods that controls the sleep modes
-
-int Browser::_buttonPinA = -1;
-int Browser::_buttonPinB = -1;
 
 volatile int Browser::_pageCursor;
 volatile int Browser::_pageNb;
@@ -30,16 +28,11 @@ void Browser::spinOnce() {
 	}
 }
 
-void Browser::init(int pinButtonA, int pinButtonB) {
+void Browser::init() {
 	Browser::_pageNb = 0;
 	Browser::pointersReset();
 
-	Browser::_buttonPinA = pinButtonA;
-	Browser::_buttonPinB = pinButtonB;
-	pinMode(_buttonPinA, INPUT_PULLUP);
-	pinMode(_buttonPinB, INPUT_PULLUP);
-	attachInterrupt(digitalPinToInterrupt(_buttonPinA), Browser::_callbackButtonA, RISING);
-	attachInterrupt(digitalPinToInterrupt(_buttonPinB), Browser::_callbackButtonB, RISING);
+	Button::setCallbacks(Browser::_callbackButtonA, Browser::_callbackButtonB);
 }
 
 void Browser::pointersReset() {

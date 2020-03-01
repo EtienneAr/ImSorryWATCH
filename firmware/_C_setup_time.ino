@@ -1,5 +1,6 @@
 #include "src/HAL.hpp"
 #include "src/artist.hpp"
+#include "src/button.hpp"
 #include "DS3231.h"
 
 volatile int setupRTC_step = -1;
@@ -39,10 +40,7 @@ void cb_setupRTC_B() {
 void setupRTC() {
   Wire.begin();
 
-  pinMode(PIN_BUTTON_A, INPUT_PULLUP);
-  pinMode(PIN_BUTTON_B, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(PIN_BUTTON_A), cb_setupRTC_A, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(PIN_BUTTON_B), cb_setupRTC_B, CHANGE);
+  Button::setCallbacks(cb_setupRTC_A, cb_setupRTC_B);
 
   setupRTC_h = 0;
   setupRTC_m = 0;

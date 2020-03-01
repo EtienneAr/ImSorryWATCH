@@ -1,19 +1,16 @@
 #ifndef BROWSER_HPP
 #define BROWSER_HPP
 
- typedef void (*pageCb)();
+typedef void (*pageCb)();
 
 class Browser {
 public:
-	static void init(int pinButtonA, int pinButtonB);
+	static void init();
 	static void pointersReset();
 	static void setPagesCallbacks(pageCb callbacks[], int len);
 	static void spinOnce();
 
 private:
-	static int _buttonPinA;
-	static int _buttonPinB;
-
 	static void _callbackButtonA();
 	static void _callbackButtonB();
 
