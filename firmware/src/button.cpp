@@ -4,13 +4,10 @@
 volatile int Button::_pinButtonA = -1;
 volatile int Button::_pinButtonB = -1;
 
-volatile buttonCb Button::_callbackA;
-volatile buttonCb Button::_callbackB;
+volatile void (*Button::_callbackA)() = NULL;
+volatile void (*Button::_callbackB)() = NULL;
 
 void Button::init(int pin_button_A, int pin_button_B) {
-	Button::_callbackA = NULL;
-	Button::_callbackB = NULL;
-
 	Button::_pinButtonA = pin_button_A;
 	Button::_pinButtonB = pin_button_B;
 	
