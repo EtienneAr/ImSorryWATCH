@@ -30,7 +30,11 @@ void setupRTC() {
 
   setupRTC_h = 0;
   setupRTC_m = 0;
-  while(setupRTC_step < 2) {
-
-  }
+  HAL::setBlinkingLed(Artist::hoursToLed(setupRTC_h));
+  
+  while(setupRTC_step < 2) delay(100);
+  
+  Clock.setClockMode(true);
+  Clock.setHour(setupRTC_h);
+  Clock.setMinute(setupRTC_m);
 }

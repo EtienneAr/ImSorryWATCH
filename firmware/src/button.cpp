@@ -10,10 +10,8 @@ volatile void (*Button::_callbackB)() = NULL;
 void Button::init(int pin_button_A, int pin_button_B) {
 	Button::_pinButtonA = pin_button_A;
 	Button::_pinButtonB = pin_button_B;
-	
 	pinMode(pin_button_A, INPUT_PULLUP);
 	pinMode(pin_button_B, INPUT_PULLUP);
-	
 	attachInterrupt(digitalPinToInterrupt(pin_button_A), Button::_callbackButtonA, CHANGE);
 	attachInterrupt(digitalPinToInterrupt(pin_button_B), Button::_callbackButtonB, CHANGE);
 }
