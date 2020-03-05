@@ -59,6 +59,9 @@ void setupRTC() {
 
   setupRTC_hh = 0;
   setupRTC_mm = 0;
+  HAL::clear();
+  HAL::on();
+  
   HAL::setLastLedNumber(0);
   HAL::setBlinkingLed(Artist::hoursToLed(setupRTC_hh));
   
@@ -72,7 +75,5 @@ void setupRTC() {
 
   Clock.setDate(setupRTC_d);
   Clock.setMonth(setupRTC_m);
-  Clock.setYear(setupRTC_y);
-
-  
+  Clock.setYear(setupRTC_y); 
 }

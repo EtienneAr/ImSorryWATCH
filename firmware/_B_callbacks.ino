@@ -1,9 +1,6 @@
 bool h12;
 bool PM;
 
-
-
-
 int displayTime() {
   HAL::setStaticLed(Artist::minutesToLed(Clock.getMinute()));
   HAL::setBlinkingLed(Artist::hoursToLed(Clock.getHour(h12, PM)));

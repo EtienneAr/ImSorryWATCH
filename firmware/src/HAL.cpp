@@ -22,9 +22,7 @@ void HAL::init() {
 void HAL::_initLed() {
   for(int i=0;i<13;i++) {
     pinMode(_ledPin[i], OUTPUT);
-    digitalWrite(_ledPin[i], HIGH);
   }
-  delay(1000);
 }
 
 void HAL::_initTimer() {
@@ -124,7 +122,6 @@ void HAL::_blinker() {
 
 	// Number display on the last led
 	if(_blinkCount % (HAL_LAST_LED_PAUSE_PERIOD + _lastLedN * 2) <= _lastLedN * 2) {
-		Serial.println(_blinkCount);
 		digitalWrite(_ledPin[12], _blinkCount % 2);
 	}
 
