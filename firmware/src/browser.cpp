@@ -1,8 +1,8 @@
 #include "browser.hpp"
 #include "button.hpp"
+#include "HAL.hpp"
 
 #include <Arduino.h>
-#include <avr/sleep.h>//this AVR library contains the methods that controls the sleep modes
 
 volatile int Browser::_pageCursor;
 volatile int Browser::_pageNb;
@@ -18,10 +18,15 @@ volatile pageCb *Browser::_pageCallbacks;
 */
 void Browser::spinOnce() {
 	if(_pageToPrint != -1) {
-		volatile int __printedPage = _pageToPrint; //Save which page is being printed
-					// because _pageToPrint can be change by an interrupt
-					// while the callback is being executed
-		( Browser::_pageCallbacks[_pageToPrint] ) ();
+		volatile int __printedPage = _pageToPrint; 	// Save which page is being printed
+													//because _pageToPrint can be change by an interrupt
+													//while the callback is being executed
+		HAL::on();
+  		HAL::setLastLedNumber(__printedPage + 1);
+
+		int  timeOut_ms = ( Browser::_pageCallbacks[_pageToPrint] ) ();
+		
+		if(timeOut_ms != -1) HAL::auto_off(timeOut_ms, Browser::pointersReset);
 
 		if(__printedPage == _pageToPrint) _pageToPrint = -1; //If the _pageToPrint haven't been changed
 					// Then _pageToPrint can be set to -1 and nothing will be set at the next loop

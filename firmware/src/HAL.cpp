@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <TimerOne.h>
+#include <avr/sleep.h>//this AVR library contains the methods that controls the sleep modes
 
 const int HAL::_ledPin[] = {4, A3, A2, A1, A0, 12, 11, 10, 9, 7, 6, 5, 8};
 
@@ -39,6 +40,14 @@ void HAL::on() {
 void HAL::off() {
 	Timer1.detachInterrupt();
 	HAL::clear();
+
+	//Puts arduino to sleep
+	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+	cli();
+	sleep_enable();
+	sleep_bod_disable();
+	sei();
+  sleep_cpu();
 }
 
 void HAL::auto_off(unsigned int timeout_ms) {
@@ -46,7 +55,7 @@ void HAL::auto_off(unsigned int timeout_ms) {
 }
 
 void HAL::auto_off(unsigned int timeout_ms, void (*callback)(void)) {
-	if(timeout_ms > 0) {
+	if(timeout_ms != -1) {
 		HAL::_autoOffCount = ((long) 1000 * timeout_ms) / HAL_ULTRAFAST_BLINK_PERIOD;
 		HAL::_autoOffCb = callback;
 	} else {

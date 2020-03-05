@@ -1,4 +1,4 @@
-pageCb buttonAcb[] = {displayTime, decimalTest, blinkTest};
+pageCb buttonAcb[] = {displayTime, displayDate, blinkTest};
 #define callbackA_N 3
 
 void setup() {
@@ -12,6 +12,7 @@ void setup() {
   //Setup pages only after the RTC is setup
   Browser::init();
   Browser::setPagesCallbacks(buttonAcb, callbackA_N);
+  HAL::off();
 }
 
 void loop() {

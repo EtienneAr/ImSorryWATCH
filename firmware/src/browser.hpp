@@ -1,7 +1,7 @@
 #ifndef BROWSER_HPP
 #define BROWSER_HPP
 
-typedef void (*pageCb)();
+typedef int (*pageCb)();
 
 class Browser {
 public:
