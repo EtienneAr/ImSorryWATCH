@@ -12,11 +12,12 @@ void setup() {
 
   Button::init(PIN_BUTTON_A, PIN_BUTTON_B);
 
-  setupRTC();
-  setupBME280();
+  setupI2CDevices();
 
-  //Setup pages only after the RTC is setup
+  setTimeRTC();
+  
   Browser::init();
+
   Browser::setPagesCallbacks(buttonAcb, callbackA_N);
 
   HAL::off();

@@ -1,4 +1,6 @@
-void setupBME280() {
+void setupI2CDevices() {
+	Wire.begin();
+	
 	while (!BME280.begin()) { delay(500); }
 
 	BME280.setOversampling(TemperatureSensor,Oversample1);
