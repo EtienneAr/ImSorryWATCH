@@ -1,6 +1,9 @@
 pageCb buttonAcb[] = {displayTime, displayDate, blinkTest};
 #define callbackA_N 3
 
+pageCb buttonBcb[] = {static1, static2, static3};
+#define callbackB_N 3
+
 void setup() {
   Serial.begin(115200);
 
@@ -18,7 +21,8 @@ void setup() {
   
   Browser::init();
 
-  Browser::setPagesCallbacks(buttonAcb, callbackA_N);
+  Browser::setPagesCallbacksA(buttonAcb, callbackA_N);
+  Browser::setPagesCallbacksB(buttonBcb, callbackB_N);
 
   HAL::off();
 }

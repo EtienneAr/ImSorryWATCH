@@ -5,9 +5,12 @@
 #include <Arduino.h>
 
 volatile int Browser::_pageCursor;
-volatile int Browser::_pageNb;
+volatile int Browser::_pageNbA;
+volatile int Browser::_pageNbB;
 volatile int Browser::_pageToPrint;
-volatile pageCb *Browser::_pageCallbacks;
+volatile pageCb *Browser::_pageCallbacksA;
+volatile pageCb *Browser::_pageCallbacksB;
+volatile bool Browser::_turnOff;
 
 /*
  * This function is not fully robust to changes of variabl during it's execution (_pageToPrint)
@@ -17,50 +20,77 @@ volatile pageCb *Browser::_pageCallbacks;
  * to a function...
 */
 void Browser::spinOnce() {
-	if(_pageToPrint != -1) {
+	if(_pageToPrint != 0) {
 		volatile int __printedPage = _pageToPrint; 	// Save which page is being printed
 													//because _pageToPrint can be change by an interrupt
 													//while the callback is being executed
 		HAL::on();
-  		HAL::setLastLedNumber(__printedPage + 1);
+  		HAL::setLastLedNumber(__printedPage);
 
-		int  timeOut_ms = ( Browser::_pageCallbacks[_pageToPrint] ) ();
+		int  timeOut_ms = -1;
+		if(_pageToPrint > 0) {
+			timeOut_ms = ( Browser::_pageCallbacksA[_pageToPrint - 1] ) ();
+		} else if (_pageToPrint < 0) {
+			timeOut_ms = ( Browser::_pageCallbacksB[-1 - _pageToPrint] ) ();
+		}
 		
 		if(timeOut_ms != -1) HAL::auto_off(timeOut_ms, Browser::pointersReset);
 
-		if(__printedPage == _pageToPrint) _pageToPrint = -1; //If the _pageToPrint haven't been changed
-					// Then _pageToPrint can be set to -1 and nothing will be set at the next loop
+		if(__printedPage == _pageToPrint) _pageToPrint = 0; //If the _pageToPrint haven't been changed
+					// Then _pageToPrint can be set to 0 and nothing will be set at the next loop
+	}
+	if(_turnOff == true) {
+		HAL::off();
+		Browser::_turnOff = false;
 	}
 }
 
 void Browser::init() {
-	Browser::_pageNb = 0;
+	Browser::_pageNbA = 0;
+	Browser::_pageNbB = 0;
+	Browser::_turnOff = false;
 	Browser::pointersReset();
 
 	Button::setCallbacks(Browser::_callbackButtonA, Browser::_callbackButtonB);
 }
 
 void Browser::pointersReset() {
-	Browser::_pageCursor = -1;
-	Browser::_pageToPrint = -1;
-	Serial.println("Pointers reset");
+	Browser::_pageCursor = 0;
+	Browser::_pageToPrint = 0;
 }
 
 void Browser::_callbackButtonA() {
-	if(_pageCursor < _pageNb - 1) {
-		_pageCursor++ ;
-		_pageToPrint = _pageCursor;
+	Serial.println("Cb A");
+	if(_pageCursor >= 0) {
+		if(_pageCursor < _pageNbA) {
+			_pageCursor++ ;
+			_pageToPrint = _pageCursor;
+		}
+	} else {
+		Browser::pointersReset();
+		Browser::_turnOff = true;
 	}
 }
 
 void Browser::_callbackButtonB() {
-	if(_pageCursor > 0) {
-		_pageCursor--;
-		_pageToPrint = _pageCursor;
+	Serial.println("Cb B");
+	if(_pageCursor <= 0) {
+		if(_pageCursor > -_pageNbB) {
+			_pageCursor--;
+			_pageToPrint = _pageCursor;
+		}
+	} else {
+		Browser::pointersReset();
+		Browser::_turnOff = true;
 	}
 }
 
-void Browser::setPagesCallbacks(pageCb callbacks[], int len) {
-	Browser::_pageCallbacks = callbacks;
-	Browser::_pageNb = len;
+void Browser::setPagesCallbacksA(pageCb callbacksA[], int lenA) {
+	Browser::_pageCallbacksA = callbacksA;
+	Browser::_pageNbA = lenA;
+}
+
+void Browser::setPagesCallbacksB(pageCb callbacksB[], int lenB) {
+	Browser::_pageCallbacksB = callbacksB;
+	Browser::_pageNbB = lenB;
 }

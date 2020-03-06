@@ -7,7 +7,8 @@ class Browser {
 public:
 	static void init();
 	static void pointersReset();
-	static void setPagesCallbacks(pageCb callbacks[], int len);
+	static void setPagesCallbacksA(pageCb callbacksA[], int lenA);
+	static void setPagesCallbacksB(pageCb callbacksB[], int lenB);
 	static void spinOnce();
 
 private:
@@ -15,9 +16,12 @@ private:
 	static void _callbackButtonB();
 
 	static volatile int _pageCursor;
-	static volatile int _pageNb;
+	static volatile int _pageNbA;
+	static volatile int _pageNbB;
 	static volatile int _pageToPrint;
-	static volatile pageCb *_pageCallbacks;
+	static volatile pageCb *_pageCallbacksA;
+	static volatile pageCb *_pageCallbacksB;
+	static volatile bool _turnOff;
 };
 
 #endif
