@@ -13,7 +13,8 @@ private:
 	static volatile void (*_callbackB)();
 	static void _callbackButtonA();
 	static void _callbackButtonB();
-	static void _debounce();
+	static volatile unsigned long _lastPressA;
+	static volatile unsigned long _lastPressB;
 };
 
 #endif
