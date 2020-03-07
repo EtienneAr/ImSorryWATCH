@@ -1,8 +1,6 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
-#define BUTTON_DEBOUNCE_LEN 1024
-
 class Button {
 public:
 	static void init(int pin_button_A, int pin_button_B);

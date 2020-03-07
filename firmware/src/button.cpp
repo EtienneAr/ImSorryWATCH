@@ -1,6 +1,8 @@
 #include "button.hpp"
 #include "Arduino.h"
 
+#define BUTTON_DEBOUNCE_LEN 16000L
+
 volatile int Button::_pinButtonA = -1;
 volatile int Button::_pinButtonB = -1;
 
@@ -22,7 +24,7 @@ void Button::setCallbacks(void (*callbackA)(), void (*callbackB)()) {
 }
 
 void Button::_callbackButtonA() {
-	if(digitalRead(Button::_pinButtonA) == HIGH) {
+	if(digitalRead(Button::_pinButtonA) == LOW) {
 		if(Button::_callbackA != NULL) {
 			Button::_callbackA();
 		}
@@ -31,7 +33,7 @@ void Button::_callbackButtonA() {
 }
 
 void Button::_callbackButtonB() {
-	if(digitalRead(Button::_pinButtonB) == HIGH) {
+	if(digitalRead(Button::_pinButtonB) == LOW) {
 		if(Button::_callbackB != NULL) {
 			Button::_callbackB();
 		}
@@ -39,8 +41,9 @@ void Button::_callbackButtonB() {
 	Button::_debounce();
 }
 
-void Button::_debounce() {
-	for(int i=0;i<BUTTON_DEBOUNCE_LEN;i++) {
+void __attribute__((optimize("O0"))) Button::_debounce() {
+	unsigned long i;
+	for(i=0;i<BUTTON_DEBOUNCE_LEN;i++) {
 		__asm__("nop\n\t");
 	}
 }
