@@ -1,8 +1,8 @@
 pageCb buttonAcb[] = {displayTime, displayDate, blinkTest};
 #define callbackA_N 3
 
-pageCb buttonBcb[] = {static1, static2, static3};
-#define callbackB_N 3
+pageCb buttonBcb[] = {displayTemperature, displayHumidity, displayPressure, displayAltitude};
+#define callbackB_N 4
 
 void setup() {
   Serial.begin(115200);

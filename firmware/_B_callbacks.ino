@@ -3,6 +3,20 @@
 bool h12;
 bool PM;
 
+#define BME_MEASURE_MIN_INT_MS 10000
+#define SEA_LEVEL 1013.25
+unsigned long BME_lastMeasure_ms = 0;
+int32_t temperature, humidity, pressure;
+float altitude;
+
+inline void readBME() {
+	if(millis() - BME_lastMeasure_ms < BME_MEASURE_MIN_INT_MS) return;
+	BME_lastMeasure_ms = millis();
+	
+	BME280.getSensorData(temperature,humidity,pressure); // Get most recent readings
+  altitude = 44330.0*(1.0 - pow(((float)pressure / 100.0) / SEA_LEVEL, 0.1903));
+}
+
 int displayTime() {
   HAL::setStaticLed(Artist::minutesToLed(Clock.getMinute()));
   HAL::setBlinkingLed(Artist::hoursToLed(Clock.getHour(h12, PM)));
@@ -22,17 +36,29 @@ int blinkTest() {
   return CB_AUTO_OFF_TIME;
 }
 
-int static1() {
-  HAL::setStaticLed(0b000000001111);
+int displayTemperature() {
+  readBME();
+  HAL::setCombinedLed(Artist::decimalToLed(temperature/100));
   return CB_AUTO_OFF_TIME;
 }
 
-int static2() {
-  HAL::setStaticLed(0b000011111111);
+int displayHumidity() {
+  readBME();
+  HAL::setCombinedLed(Artist::decimalToLed(humidity/100));
   return CB_AUTO_OFF_TIME;
 }
 
-int static3() {
-  HAL::setStaticLed(0b111111111111);
+int displayPressure() {
+  readBME();
+  //Do something here
+  //HAL::setCombinedLed(Artist::decimalToLed(pressure));
+  return CB_AUTO_OFF_TIME;
+}
+
+int displayAltitude() {
+  readBME();
+  HAL::setBlinkingLed(0);
+  HAL::setStaticLed(int(altitude));
+  Serial.println(altitude);
   return CB_AUTO_OFF_TIME;
 }
