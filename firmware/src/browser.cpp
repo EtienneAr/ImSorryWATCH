@@ -25,16 +25,17 @@ void Browser::spinOnce() {
 													//because _pageToPrint can be change by an interrupt
 													//while the callback is being executed
 		HAL::on();
-  		HAL::setLastLedNumber(__printedPage);
 
 		int  timeOut_ms = -1;
 		if(_pageToPrint > 0) {
+			HAL::setLastLedNumber(__printedPage);
 			timeOut_ms = ( Browser::_pageCallbacksA[_pageToPrint - 1] ) ();
 		} else if (_pageToPrint < 0) {
+			HAL::setLastLedNumber(-__printedPage);
 			timeOut_ms = ( Browser::_pageCallbacksB[-1 - _pageToPrint] ) ();
 		}
 		
-		if(timeOut_ms != -1) HAL::auto_off(timeOut_ms, Browser::pointersReset);
+		HAL::auto_off(timeOut_ms, Browser::pointersReset);
 
 		if(__printedPage == _pageToPrint) _pageToPrint = 0; //If the _pageToPrint haven't been changed
 					// Then _pageToPrint can be set to 0 and nothing will be set at the next loop
@@ -60,7 +61,6 @@ void Browser::pointersReset() {
 }
 
 void Browser::_callbackButtonA() {
-	Serial.println("Cb A");
 	if(_pageCursor >= 0) {
 		if(_pageCursor < _pageNbA) {
 			_pageCursor++ ;
@@ -73,7 +73,6 @@ void Browser::_callbackButtonA() {
 }
 
 void Browser::_callbackButtonB() {
-	Serial.println("Cb B");
 	if(_pageCursor <= 0) {
 		if(_pageCursor > -_pageNbB) {
 			_pageCursor--;
