@@ -5,8 +5,6 @@ pageCb buttonBcb[] = {displayTemperature, displayHumidity, displayPressure, disp
 #define callbackB_N 4
 
 void setup() {
-  Serial.begin(115200);
-
   HAL::init();
 
   HAL::setStaticLed(0xFFF);
