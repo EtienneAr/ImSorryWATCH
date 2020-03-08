@@ -127,9 +127,9 @@ void HAL::_blinker() {
 
 	//Auto off
 	if(HAL::_autoOffCount == 0) {
-		HAL::off();
-		HAL::_autoOffCount = -1;
 		if(HAL::_autoOffCb != NULL) HAL::_autoOffCb();
+		HAL::_autoOffCount = -1;
+		HAL::off();
 	}
 
 	if(HAL::_autoOffCount > 0) HAL::_autoOffCount--;
