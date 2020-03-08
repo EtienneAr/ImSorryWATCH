@@ -5,13 +5,15 @@ uint16_t Artist::hoursToLed(int h) {
   return 1<<h;
 }
 
-uint16_t Artist::minutesToLed(int m) {
+uint16_t Artist::minutesToLed(int m, bool drawOnes = false) {
   int five, ones = 0;
   
-  five = (m%30) / 5;          // Number of led to light up
+  if(drawOnes) five = (m%30) / 5;          // Number of led to light up
+  else five = (m%60) / 5;
+  
   five = (1<<(five + 1)) - 1; // Light all the led before
 
-  // Insert #ifdef here
+  if(drawOnes) {
     ones = ~((1<<(12 - m%5)) - 1);
     
     if(m > 30) {
@@ -21,8 +23,8 @@ uint16_t Artist::minutesToLed(int m) {
     } else {
       five &= 0xFFE; // Turn off LED 0
     }
-  // Insert #endif here
-  
+  }
+
   return (five | ones) & 0xFFF;
 }
 
