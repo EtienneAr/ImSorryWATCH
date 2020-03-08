@@ -1,9 +1,6 @@
-#define CB_AUTO_OFF_TIME 5000
-
 bool h12;
 bool PM;
 
-#define BME_MEASURE_MIN_INT_MS 10000
 #define SEA_LEVEL 1013.25
 unsigned long BME_lastMeasure_ms = 0;
 int32_t temperature, humidity, pressure;
