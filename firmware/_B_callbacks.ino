@@ -10,7 +10,9 @@ inline void readBME() {
 	if(millis() - BME_lastMeasure_ms < BME_MEASURE_MIN_INT_MS) return;
 	BME_lastMeasure_ms = millis();
 	
+  BME280.mode(ForcedMode);
 	BME280.getSensorData(temperature,humidity,pressure); // Get most recent readings
+  BME280.mode(SleepMode);
   altitude = 44330.0*(1.0 - pow(((float)pressure / 100.0) / SEA_LEVEL, 0.1903));
 }
 
