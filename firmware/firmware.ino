@@ -1,5 +1,5 @@
-#define PIN_BUTTON_A 2
-#define PIN_BUTTON_B 3
+#define PIN_BUTTON_A 3
+#define PIN_BUTTON_B 2
 
 
 #define CB_AUTO_OFF_TIME 5000 //ms
