@@ -17,47 +17,19 @@ inline void readBME() {
 }
 
 int displayTime() {
-  HAL::setStaticLed(Artist::minutesToLed(Clock.getMinute()));
-  HAL::setBlinkingLed(Artist::hoursToLed(Clock.getHour(h12, PM)));
+  HAL::setStaticLed(Artist::hoursToLed(Clock.getHour(h12, PM)));
   return CB_AUTO_OFF_TIME;
   
 }
 
-int displayDate() {
-  HAL::setCombinedLed(Artist::decimalToLed(Clock.getDate()));
-  return CB_AUTO_OFF_TIME;
-}
-
-
-int blinkTest() {
-  HAL::setStaticLed(0x555);
-  HAL::setBlinkingLed(0xFFF);
-  return CB_AUTO_OFF_TIME;
-}
-
 int displayTemperature() {
   readBME();
-  HAL::setCombinedLed(Artist::decimalToLed(temperature/100));
+  HAL::setStaticLed(Artist::hoursToLed((temperature/100)%10));
   return CB_AUTO_OFF_TIME;
 }
 
 int displayHumidity() {
   readBME();
-  HAL::setCombinedLed(Artist::decimalToLed(humidity/100));
-  return CB_AUTO_OFF_TIME;
-}
-
-int displayPressure() {
-  readBME();
-  //Do something here
-  //HAL::setCombinedLed(Artist::decimalToLed(pressure));
-  return CB_AUTO_OFF_TIME;
-}
-
-int displayAltitude() {
-  readBME();
-  HAL::setBlinkingLed(0);
-  HAL::setStaticLed(int(altitude));
-  Serial.println(altitude);
+  HAL::setStaticLed(Artist::hoursToLed((humidity/100)%10));
   return CB_AUTO_OFF_TIME;
 }
